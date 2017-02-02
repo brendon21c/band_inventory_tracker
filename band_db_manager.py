@@ -3,8 +3,6 @@ from sqlalchemy import ForeignKey
 from Main import db
 
 
-
-
 class Concert(db.Model):
 
     """This table will list concert dates and venue."""
