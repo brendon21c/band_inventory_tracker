@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <title> Band Inventory Tracker </title>
+
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="{{ url_for('static', filename= 'style.css') }}">
+
+  <!-- Use Google fonts for nice text  -->
+  <link href="https://fonts.googleapis.com/css?family=Lora" rel="stylesheet">
+
+
+</head>
+<body>
+
+
+
+<div class="container">
+
+
+  <h1> Add a New Show</h1>
+
+    <ul class="navigation">
+
+      <li class="menu"><a href = "/">Home</a></li>
+    </ul>
+
+
+  <div>
+
+    <form action="{{ request.path }}" method="post">
+      Venue Name:<br>
+      <input type="text" name="name" placeholder="Venue Name" /></br>
+      Show Date:<br>
+      <input type="date" name="date">
+      <input type="submit" value="Submit" />
+    </form>
+  </div>
+
+</div>
+</body>
+</html>

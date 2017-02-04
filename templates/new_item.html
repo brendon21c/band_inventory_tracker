@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <title> Band Inventory Tracker </title>
+
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="{{ url_for('static', filename= 'style.css') }}">
+
+  <!-- Use Google fonts for nice text  -->
+  <link href="https://fonts.googleapis.com/css?family=Lora" rel="stylesheet">
+
+
+</head>
+<body>
+
+
+
+<div class="container">
+
+
+  <h1> Add a New Merchandise Item</h1>
+
+  {% for category, message in get_flashed_messages(with_categories = true) %}
+    <div class = "alet danger">
+      {{ message }}
+    </div>
+  {% endfor %}
+
+
+    <ul class="navigation">
+
+      <li class="menu"><a href = "/">Home</a></li>
+    </ul>
+
+
+  <div>
+
+    <form action="{{ request.path }}" method="post">
+      Item Type:<br>
+      <select name="type">
+        <option value="t-shirt">T-Shirt</option>
+        <option value="cd">CD Album</option>
+        <option value="vinyl">Vinyl Album</option>
+        <option value="poster">Poster</option>
+      <p>
+      Item Description:<br>
+      <input type="text" name="description" placeholder="Description">
+      <p>
+      Item Price:<br>
+      <input type="number" name="price" step=0.01>
+      <input type="submit" value="Submit" />
+    </form>
+
+    <table class="items_table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Item Type</th>
+          <th>Description</th>
+          <th>Price</th>
+        </tr>
+      </thead>
+
+        {% for item in Items %}
+          <tr>
+            <td>{{ item.id }}</td>
+            <td>{{ item.item_type }}</td>
+            <td>{{ item.item_description }}</td>
+            <td>{{ item.item_price }}</td>
+          </tr>
+        {% endfor %}
+
+    </table>
+
+  </div>
+
+</div>
+</body>
+</html>

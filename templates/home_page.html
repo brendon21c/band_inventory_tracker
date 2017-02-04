@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <title> Band Inventory Tracker </title>
+
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="{{ url_for('static', filename= 'style.css') }}">
+
+  <!-- Use Google fonts for nice text  -->
+  <link href="https://fonts.googleapis.com/css?family=Lora" rel="stylesheet">
+
+
+</head>
+<body>
+
+
+<div class="container"> <!-- I cannot seem to change the background color of the container. -->
+
+  <ul class="navigation">
+
+    <li class="menu"><a href = "/">Home</a></li>
+    <li class="menu"><a href = "{{ url_for('new_show') }}">New Show</a></li>
+    <li class="menu"><a href = "{{ url_for('new_item') }}">New Item</a></li>
+
+
+
+  </ul>
+
+
+  <table class="shows_table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Date</th>
+        <th>Venue</th>
+      </tr>
+    </thead>
+
+      {% for show in concerts %}
+        <tr>
+          <td>{{ show.id }}</td>
+          <td>{{ show.date }}</td>
+          <td>{{ show.venue }}</td>
+        </tr>
+      {% endfor %}
+
+  </table>
+
+</div>
+</body>
+</html>
