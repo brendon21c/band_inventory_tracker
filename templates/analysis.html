@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+
+<!-- This site is for entering new Items for concerts -->
+
+<html lang="en">
+<head>
+
+  <title> Band Inventory Tracker </title>
+
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="{{ url_for('static', filename= 'style.css') }}">
+
+  <!-- Use Google fonts for nice text  -->
+  <link href="https://fonts.googleapis.com/css?family=Lora" rel="stylesheet">
+
+
+</head>
+<body>
+
+  <div class="container">
+
+    <h1> Inventory Analysis</h1>
+
+    <ul class="navigation">
+
+      <li class="menu"><a href = "/">Home</a></li>
+    </ul>
+    <p>
+
+    <h3> This allows you to see some inventory data. Choose a data analysis topic.</h3>
+
+    <div>
+      <form>
+
+      <select name="query">
+
+        {% for item in data_list %}
+
+        <option value= "{{ item }}" selected>{{ item }}</option>
+
+        {% endfor %}
+          <input type="submit" value="Submit" />
+
+
+      </form>
+    </div>
+    <p>
+
+    <p> {{ test_answer }}</p>
+
+      <div>
+        <table class="shows_table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Date</th>
+              <th>Venue</th>
+            </tr>
+          </thead>
+
+            {% for show in shows %}
+              <tr>
+                <td>{{ show.id }}</td>
+                <td>{{ show.date }}</td>
+                <td>{{ show.venue }}</td>
+              </tr>
+            {% endfor %}
+
+        </table>
+        <p>
+
+      <table class="total_sales_table">
+        <thead>
+          <tr>
+            <th>Item Type</th>
+            <th>Description</th>
+            <th>Number Sold</th>
+            <th>Total Price</th>
+          </tr>
+        </thead>
+
+          {% for item in items %}
+            <tr>
+              <td>{{ item.id }}</td>
+              <td>{{ item.item_type }}</td>
+              <td>{{ item.item_description }}</td>
+          {% endfor %}
+
+          {% for amount in totals %}
+
+              <td>{{ item.item_price }}</td>
+
+          {% endfor %}
+            </tr>
+
+      </table>
+
+
+
+
+  </div>
+</body>
+</html>

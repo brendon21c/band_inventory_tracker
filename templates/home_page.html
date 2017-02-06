@@ -4,6 +4,8 @@
 
   <title> Band Inventory Tracker </title>
 
+  <p> This is a web app to manage and analyze</p>
+
   <meta charset="UTF-8">
   <link rel="stylesheet" href="{{ url_for('static', filename= 'style.css') }}">
 
@@ -23,6 +25,8 @@
     <li class="menu"><a href = "{{ url_for('new_show') }}">New Show</a></li>
     <li class="menu"><a href = "{{ url_for('new_item') }}">New Item</a></li>
     <li class="menu"><a href = "{{ url_for('concert_details') }}">Add Concert Data</a></li>
+    <li class="menu"><a href = "{{ url_for('analysis') }}">Inventory Data Analysis</a></li>
+
 
 
   </ul>

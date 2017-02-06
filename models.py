@@ -23,7 +23,7 @@ class Concert(db.Model):
 
 class Show(db.Model):
 
-    """ This is the table for the specific show, i.e. merch sold, total sales, etc. """
+    """ This is the table for the specific show, i.e. merch sold, etc. """
 
     __tablename__ = 'Concert_Totals'
     id = db.Column('Sales_Item',db.Integer, primary_key = True)

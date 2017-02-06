@@ -61,12 +61,66 @@ def concert_details():
             #return redirect(url_for('concert_details'))
 
         else:
-            print('update button works')
+
+            try:
+
+                venue = request.form['show']
+                item_id = request.form['item']
+                sold = request.form['item_sold']
+
+                # print(venue)
+                # print(item_id)
+                # print(sold)
+                #
+                # update = Show.query.filter_by(venue_id = venue).filter_by(item_id = item_id).all()
+                #
+                # max_query = db.session.query(db.func.max(Show.items_sold)).scalar()
+                # print (max_query)
+                #
+                # item_query = Show.query.filter_by(items_sold = max_query).all()
+                #
+                # for x, y in item_query:
+                #
+                #
+                #     print(x.item_id, )
+
+
+
+                # loops over the query and modifies the item sold count.
+                for x in update:
+
+                    x.items_sold = sold
+                    db.session.commit()
+
+
+            except Exception as e:
+
+                print("Error entering data")
+                print(e)
+
+
+
 
     return render_template('concert_details.html', concerts = Concert.query.all(), items = Item.query.all())
 
 
+@app.route('/analysis')
+def analysis():
 
+    list_options = ["test1", "test2", "test3"]
+
+    if not request.args.get('query'):
+
+        return render_template('analysis.html', data_list = list_options, concert = Concert.query.all(), shows = Concert.query.all())
+
+
+    else:
+
+        query = request.args.get('query')
+        show =  request.args.get('show')
+
+        answer = "full house"
+        return render_template('analysis.html', data_list = list_options, test_answer = answer)
 
 
 
