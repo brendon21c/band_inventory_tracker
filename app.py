@@ -1,5 +1,6 @@
 from flask import Flask, request, flash, url_for, redirect, render_template
 from flask_sqlalchemy import SQLAlchemy
+import itertools
 
 
 app = Flask(__name__)
@@ -52,9 +53,21 @@ def concert_details():
         # This should add a new item to the database but I'm gettting an error of database locked.
         if request.form['button'] == "Add":
 
-            print('add button works')
+            item_id = request.form['item']
+            sold = float(request.form['item_sold'])
 
-            new_item = Show(request.form['show'], request.form['item'], request.form['item_sold'])
+            query = Item.query.filter_by(id = item_id).all()
+
+            price = 0
+
+            for x in query:
+
+                price = float(x.item_price * sold)
+
+
+            print(price)
+
+            new_item = Show(request.form['show'], request.form['item'], request.form['item_sold'], price)
             #
             db.session.add(new_item)
             db.session.commit()
@@ -66,31 +79,24 @@ def concert_details():
 
                 venue = request.form['show']
                 item_id = request.form['item']
-                sold = request.form['item_sold']
+                sold = float(request.form['item_sold'])
 
-                # print(venue)
-                # print(item_id)
-                # print(sold)
-                #
-                # update = Show.query.filter_by(venue_id = venue).filter_by(item_id = item_id).all()
-                #
-                # max_query = db.session.query(db.func.max(Show.items_sold)).scalar()
-                # print (max_query)
-                #
-                # item_query = Show.query.filter_by(items_sold = max_query).all()
-                #
-                # for x, y in item_query:
-                #
-                #
-                #     print(x.item_id, )
+                query = Item.query.filter_by(id = item_id).all()
 
+                price = 0
+
+                update = Show.query.filter_by(venue_id = venue).filter_by(item_id = item_id).all()
 
 
                 # loops over the query and modifies the item sold count.
                 for x in update:
+                    for y in query:
 
-                    x.items_sold = sold
-                    db.session.commit()
+                        x.items_sold = sold
+                        price = float(y.item_price * sold)
+                        x.total_sold = price
+
+                        db.session.commit()
 
 
             except Exception as e:
@@ -107,23 +113,47 @@ def concert_details():
 @app.route('/analysis')
 def analysis():
 
-    list_options = ["test1", "test2", "test3"]
+    list_options = ["Total sales for show", "Highest Total Selling Item"]
 
-    if not request.args.get('query'):
+    if not request.args.get('query') or not request.args.get('venue_number'):
 
-        return render_template('analysis.html', data_list = list_options, concert = Concert.query.all(), shows = Concert.query.all())
+        return render_template('analysis.html', data_list = list_options, venues = Concert.query.all(), concert = Concert.query.all(), shows = Concert.query.all())
 
 
     else:
 
         query = request.args.get('query')
-        show =  request.args.get('show')
+        show =  request.args.get('venue_number')
 
-        answer = "full house"
-        return render_template('analysis.html', data_list = list_options, test_answer = answer)
+        if query == "Total sales for show":
+
+            sold = Show.query.filter_by(venue_id = show).all()
+
+            number_sold = []
+
+            item_number = []
+
+            for x in sold:
+
+                number_sold.append(x.items_sold)
+
+                for y in sold:
+
+                    item_number.append(y.item_id)
 
 
+            return render_template('analysis.html', data_list = list_options, venues = Concert.query.all(), shows = Concert.query.all(), items = Show.query.filter_by(venue_id = show).all(), totals = Show.query.filter_by(venue_id = show).all())
 
+
+        else:
+
+            answer = "full house"
+
+            return render_template('analysis.html', data_list = list_options, venues = Concert.query.all(), shows = Concert.query.all(), test_answer = answer)
+
+
+def get_price_list(number_of_sold_list):
+    pass
 
 if __name__ == '__main__':
     db.create_all()

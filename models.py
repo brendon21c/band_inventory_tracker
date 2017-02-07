@@ -30,12 +30,14 @@ class Show(db.Model):
     venue_id = db.Column(db.Integer, ForeignKey('Concert_List.Venue_ID'))
     item_id = db.Column(db.Integer, ForeignKey('Items.Item_ID'))
     items_sold = db.Column(db.Integer)
+    total_sold = db.Column(db.Float)
 
-    def __init__(self, venue_id, item_id, items_sold):
+    def __init__(self, venue_id, item_id, items_sold, total_sold):
 
         self.venue_id = venue_id
         self.item_id = item_id
-        self. items_sold = items_sold
+        self.items_sold = items_sold
+        self.total_sold = total_sold
 
 
 

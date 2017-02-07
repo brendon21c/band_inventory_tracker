@@ -32,14 +32,27 @@
     <div>
       <form>
 
-      <select name="query">
+      <select name="query"> <!-- List of all the possible queries -->
 
         {% for item in data_list %}
 
         <option value= "{{ item }}" selected>{{ item }}</option>
 
         {% endfor %}
-          <input type="submit" value="Submit" />
+
+      </select>
+
+      <select name="venue_number">
+
+        {% for venue in venues %}
+
+        <option value="{{ venue.id }}" selected>{{ venue.id }}</option>
+
+        {% endfor %}
+
+      </select>
+
+      <input type="submit" value="Submit" />
 
 
       </form>
@@ -80,16 +93,17 @@
         </thead>
 
           {% for item in items %}
+
             <tr>
-              <td>{{ item.id }}</td>
               <td>{{ item.item_type }}</td>
               <td>{{ item.item_description }}</td>
-          {% endfor %}
 
           {% for amount in totals %}
 
-              <td>{{ item.item_price }}</td>
+              <td>{{ amount.items_sold }}</td>
+              <td>{{ item.item_price * amount.items_sold }}</td>
 
+          {% endfor %}
           {% endfor %}
             </tr>
 
