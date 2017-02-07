@@ -113,7 +113,7 @@ def concert_details():
 @app.route('/analysis')
 def analysis():
 
-    list_options = ["Total sales for show", "Highest Total Selling Item"]
+    list_options = ["Total sales for show", "Highest Selling Item", "Highest selling item for a show"]
 
     if not request.args.get('query') or not request.args.get('venue_number'):
 
@@ -129,20 +129,14 @@ def analysis():
 
             sold = Show.query.filter_by(venue_id = show).all()
 
-            number_sold = []
-
             item_number = []
 
             for x in sold:
 
-                number_sold.append(x.items_sold)
-
-                for y in sold:
-
-                    item_number.append(y.item_id)
+                item_number.append(x.item_id)
 
 
-            return render_template('analysis.html', data_list = list_options, venues = Concert.query.all(), shows = Concert.query.all(), items = Show.query.filter_by(venue_id = show).all(), totals = Show.query.filter_by(venue_id = show).all())
+            return render_template('analysis.html', data_list = list_options, venues = Concert.query.all(), shows = Concert.query.all(), items = Item.query.filter_by(id = sold.item_id), totals = Show.query.filter_by(venue_id = show).all())
 
 
         else:

@@ -101,7 +101,7 @@
           {% for amount in totals %}
 
               <td>{{ amount.items_sold }}</td>
-              <td>{{ item.item_price * amount.items_sold }}</td>
+              <td>{{ amount.total_sold }}</td>
 
           {% endfor %}
           {% endfor %}
