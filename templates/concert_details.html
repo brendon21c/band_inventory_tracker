@@ -21,6 +21,12 @@
 
     <h1> Add Item Information for Concerts</h1>
 
+    {% for category, message in get_flashed_messages(with_categories = true) %}
+      <div class = "alet danger">
+        {{ message }}
+      </div>
+    {% endfor %}
+
     <ul class="navigation">
 
       <li class="menu"><a href = "/">Home</a></li>

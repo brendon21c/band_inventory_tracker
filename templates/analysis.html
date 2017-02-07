@@ -27,7 +27,13 @@
     </ul>
     <p>
 
-    <h3> This allows you to see some inventory data. Choose a data analysis topic.</h3>
+    <h3> This allows you to see some inventory data.</h3>
+    <p>
+
+    <p class="analysis_instructions">
+
+      First select your analysis topic and then select the show you want to see data for.
+      For every other topic you don't need to select a show. 
 
     <div>
       <form>
@@ -92,18 +98,13 @@
           </tr>
         </thead>
 
-          {% for item in items %}
-
+          {% for x,y in totals %}
             <tr>
-              <td>{{ item.item_type }}</td>
-              <td>{{ item.item_description }}</td>
+              <td>{{ y.item_type }}</td>
+              <td>{{ y.item_description }}</td>
+              <td>{{ x.items_sold }}</td>
+              <td>{{ x.total_sold }}</td>
 
-          {% for amount in totals %}
-
-              <td>{{ amount.items_sold }}</td>
-              <td>{{ amount.total_sold }}</td>
-
-          {% endfor %}
           {% endfor %}
             </tr>
 
